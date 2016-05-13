@@ -1,42 +1,168 @@
 
 table.tomatoGallery {display:none;width:100%;}
+.tomatoGallery_tools .btns {float:left; margin-left:10px;line-height: 17px;}
+.tomatoGallery_tools .btns button {float:left; width:12px; height:12px; margin-left:10px; text-indent:-9999px;border:0; color:#666; vertical-align:middle; font-family:tss; cursor:pointer}
 
-.tomatoGallery_compiled .tomatoGallery_tools {width:100%;height:29px;background: white;}
-.tomatoGallery_compiled.fullScreen .tomatoGallery_tools {display: none;}
-.tomatoGallery_compiled .btns {float:left; margin-left:10px;}
-.tomatoGallery_compiled .btns button {float:left; width:12px; height:12px; margin-left:10px; text-indent:-9999px;border:0; color:#666; vertical-align:middle; font-family:tss; cursor:pointer}
-
-.tomatoGallery_compiled .btns button:first-child {margin-left:0;}
-.tomatoGallery_compiled .btns button {background-position-y:0px;}
+.tomatoGallery_tools .btns button:first-child {margin-left:0;}
+.tomatoGallery_tools .btns button {background-position-y:0px;}
 .tomatoGallery_compiled.blue .btns button {background-position-y:0px;}
 .tomatoGallery_compiled.red .btns button {background-position-y:-34px;}
 .tomatoGallery_compiled.green .btns button {background-position-y:-68px;}
 .tomatoGallery_compiled.yellow .btns button {background-position-y:-102px;}
 .tomatoGallery_compiled.orange .btns button {background-position-y:-136px;}
 
-.tomatoGallery_compiled .btns 	 button:hover {background-position-y:-17px;}
+.tomatoGallery_tools .btns 	 button:hover {background-position-y:-17px;}
 .tomatoGallery_compiled.red .btns 	 button:hover {background-position-y:-52px;}
 .tomatoGallery_compiled.green .btns  button:hover {background-position-y:-685px;}
 .tomatoGallery_compiled.yellow .btns button:hover {background-position-y:-119px;}
 .tomatoGallery_compiled.orange .btns button:hover {background-position-y:-153px;}
 
-.tomatoGallery_compiled .btns button {background-position-y:-0px;background-image: url(btn_view_option.gif);background-repeat: no-repeat;}
+.tomatoGallery_tools .btns button {background-position-y:-0px;background-image: url(../src/btn_view_option.gif);background-repeat: no-repeat;}
+.tomatoGallery_tools .btns >span {float:left;padding:0px 4px;cursor: pointer;font-size: 14px;}
+.tomatoGallery_tools .btns button.m1 {background-position-x:3px }
+.tomatoGallery_tools .btns button.m2 {background-position-x: -13px;}
+.tomatoGallery_tools .btns button.m3 {background-position-x: -32px;}
+.tomatoGallery_tools .btns button.m4 {background-position-x: -54px;}
 
-.tomatoGallery_compiled .btns button.m1 {background-position-x:3px }
-.tomatoGallery_compiled .btns button.m2 {background-position-x: -13px;}
-.tomatoGallery_compiled .btns button.m3 {background-position-x: -32px;}
-.tomatoGallery_compiled .btns button.m4 {background-position-x: -54px;}
+.tomatoGallery_tools .btns button.m5 {background-position-x: -76px;}
+.tomatoGallery_tools .btns button.m6 {background-position-x: -98px;}
+.tomatoGallery_tools .btns button.m7 {background-position-x:-120px;}
+.tomatoGallery_tools .btns button.m8 {background-position-x:-141px;}
+.tomatoGallery_tools .btns button.m9 {background-position-x:-163px;width:13px;}
+
+.TGBOX {margin:10px 0px;}
+
+div.tomatoGallery_compiled {height:730px;overflow: hidden;position: relative;background: #999;padding-top:0px;clear:both;}
+div.tomatoGallery_compiled.fullScreen {position: fixed;left:0px;top:0px;width:100%;height:100%;z-index: 200}
+div.tomatoGallery_compiled .tomatoGallery_btn_close {display:none;}
+
+
+
+div.tomatoGallery_compiled.fullScreen .tomatoGallery_btn_prev,
+div.tomatoGallery_compiled.fullScreen .tomatoGallery_btn_next {width:100px;height:100px;background-size: 30%;}
+
+div.tomatoGallery_compiled .tomatoGallery_btn_prev,
+div.tomatoGallery_compiled .tomatoGallery_btn_next {width:60px;height:60px;position: absolute;z-index: 5;display:block;border:none;font-size:20px;font-family:Helvetica;color:#999;opacity:0.5;-webkit-transition: all 0.2s ease-in-out;;cursor: pointer;-webkit-appearance: none;border-radius: 0;text-indent: -9999px;top:250px;background-size:27%;}
+
+div.tomatoGallery_compiled .tomatoGallery_btn_prev {left :0px;background: #b09986 url('../src/btn_slide_prev.png') no-repeat 50%;}
+
+div.tomatoGallery_compiled .tomatoGallery_btn_next {right:0px;background: #b09986 url('../src/btn_slide_next.png') no-repeat 50%;}
+
+	div.tomatoGallery_compiled.noAnimation .tomatoGallery_btn_prev ,
+	div.tomatoGallery_compiled.noAnimation .tomatoGallery_btn_next {-webkit-transition: all 0s ease-in-out !important;transition: all 0s ease-in-out !important;}
+
+
+
+div.tomatoGallery_compiled.fullScreen .tomatoGallery_btn_close {right:0px;top:0px;width:50px;height:50px;position: absolute;z-index: 50;display:block;border:none;font-size:20px;font-family:Helvetica;color:white;background: none;-webkit-transition: all 0.2s ease-in-out;;cursor: pointer;}
+
+
+div.tomatoGallery_compiled.hover .tomatoGallery_btn_prev ,
+div.tomatoGallery_compiled.hover .tomatoGallery_btn_next {opacity: 1}
+div.tomatoGallery_compiled .tomatoGallery_btn_prev:hover ,
+div.tomatoGallery_compiled .tomatoGallery_btn_next:hover {opacity: 1}
+
+div.tomatoGallery_compiled>ul.tomatoGallery_visualUl {width:100%;height:100%;overflow:hidden;-webkit-transition: all 0.4s ease-in-out;transition: all 0.4s ease-in-out;padding:0px;margin:0px;}
+div.tomatoGallery_compiled.noAnimation>ul.tomatoGallery_visualUl {-webkit-transition: all 0s ease-in-out !important;transition: all 0s ease-in-out !important;}
+div.tomatoGallery_compiled>ul.tomatoGallery_visualUl>li.tomatoGallery_visualLi {width:100%;height:100%;text-align: center;float:left;position: relative;overflow: hidden;}
+div.tomatoGallery_compiled>ul.tomatoGallery_visualUl>li.tomatoGallery_visualLi>img.tomatoGallery_visualImg {z-index: 3;position: absolute;max-width: none !important;}
+div.tomatoGallery_compiled>ul.tomatoGallery_visualUl>li.tomatoGallery_visualLi>p.tomatoGallery_visualP {text-align:left;position: absolute;top:0px;left:0px;width:100%;background:rgba(0,0,0,0.7);z-index: 5;color:white;font-size:18px;font-family:tss;line-height: 30px;text-indent: 5px;opacity:0.7;-webkit-transition: all 0.2s ease-in-out;height:30px;margin:none !important;margin:0px;padding:10px;}
+div.tomatoGallery_compiled>ul.tomatoGallery_visualUl>li.tomatoGallery_visualLi>p.tomatoGallery_visualP>a.openArchives {font-size:12px;text-indent: 5px;}
+div.tomatoGallery_compiled.hover>ul.tomatoGallery_visualUl>li.tomatoGallery_visualLi>p.tomatoGallery_visualP {opacity: 1}
+
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl {width:100%;height:74px;overflow:hidden;z-index:10;position: absolute;bottom:0px;opacity:1;-webkit-transition: all 0.1s ease-in-out;text-align: left;padding:0px;margin:0px;}
+div.tomatoGallery_compiled.hover ul.tomatoGallery_thumbnailUl {opacity:1;}
+div.tomatoGallery_compiled ul,
+div.tomatoGallery_compiled ol,
+div.tomatoGallery_compiled li {list-style:none;}
+
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi {width:100px;height:70px;float:left;-webkit-transition: all 0.2s ease-in-out;cursor: pointer;border:2px solid rgba(0,0,0,0);bottom:0px;background:#ccc;padding:0px 2px;position: relative;}
+
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi:hover,
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.selected.tomatoGallery_thumbnailLi {border:2px solid white;z-index:10;}
+
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi>img.tomatoGallery_thumbnailImg {opacity: 0.6;position: absolute;max-height:100%;}
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi:hover>img.tomatoGallery_thumbnailImg,
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi.selected>img.tomatoGallery_thumbnailImg {opacity: 1;}
+
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi>img.tomatoGallery_thumbnailImg>p.tomatoGallery_thumbnailP {display:none;}
+
+
+
+
+@media screen and (max-width: 640px) {
+
+	div.tomatoGallery_compiled .tomatoGallery_btn_prev ,
+	div.tomatoGallery_compiled .tomatoGallery_btn_next {display:none;}
+
+	div.tomatoGallery_compiled .tomatoGa 
+	llery_btn_prev ,
+	div.tomatoGallery_compiled .tomatoGallery_btn_next {top:-50%;margin-top:100%;}
+	
+	div.tomatoGallery_compiled div.thumbnailPack {width:100%;height:74px;overflow-x:auto;z-index:10;position: absolute;bottom:0px;}
+	div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl {width:100%;height:74px;overflow:hidden;z-index:10;position: absolute;bottom:0px;opacity: 1;-webkit-transition: all 0.1s ease-in-out;text-align: left;}
+	/*div.tomatoGallery_compiled div.thumbnailPack ul.tomatoGallery_thumbnailUl {-webkit-transition:none;transition:none;}*/
+	div.tomatoGallery_compiled.hover ul.tomatoGallery_thumbnailUl {opacity:1;}
+	div.tomatoGallery_compiled ul,
+	div.tomatoGallery_compiled ol,
+	div.tomatoGallery_compiled li {list-style:none;}
+
+	div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi {width:100px;height:70px;float:left;-webkit-transition: all 0.2s ease-in-out;cursor: pointer;border:2px solid rgba(0,0,0,0);bottom:0px;background:#ccc;padding:0px 2px;position: relative;}
+
+	div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi:hover,
+	div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.selected.tomatoGallery_thumbnailLi {border:2px solid white;z-index:10;}
+
+	div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi>img.tomatoGallery_thumbnailImg {opacity: 0.6;position: absolute;max-height:100%;}
+	div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi:hover>img.tomatoGallery_thumbnailImg,
+	div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi.selected>img.tomatoGallery_thumbnailImg {opacity: 1;}
+
+	div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi>img.tomatoGallery_thumbnailImg>p.tomatoGallery_thumbnailP {display:none;}
+}
 
 @media screen and (max-width: 980px) {
-	.tomatoGallery_compiled .btns button.m5,.tomatoGallery_compiled .btns button.m4 {display: none}
+	.tomatoGallery_tools .btns .m5,.tomatoGallery_tools .btns .m4 {display: none}
 }
-.tomatoGallery_compiled .btns button.m5 {background-position-x: -76px;}
-.tomatoGallery_compiled .btns button.m6 {background-position-x: -98px;}
-.tomatoGallery_compiled .btns button.m7 {background-position-x:-120px;}
-.tomatoGallery_compiled .btns button.m8 {background-position-x:-141px;}
 
 
+/*
 
+.tomatoGallery_tools {width:100%;height:29px;background: white;}
+.tomatoGallery_compiled.fullScreen .tomatoGallery_tools {display: none;}
+.tomatoGallery_tools .btns {float:left; margin-left:10px;}
+.tomatoGallery_tools .btns button {float:left; width:12px; height:12px; margin-left:10px; text-indent:-9999px;border:0; color:#666; vertical-align:middle; font-family:tss; cursor:pointer}
+
+.tomatoGallery_tools .btns button:first-child {margin-left:0;}
+.tomatoGallery_tools .btns button {background-position-y:0px;}
+.tomatoGallery_compiled.blue .btns button {background-position-y:0px;}
+.tomatoGallery_compiled.red .btns button {background-position-y:-34px;}
+.tomatoGallery_compiled.green .btns button {background-position-y:-68px;}
+.tomatoGallery_compiled.yellow .btns button {background-position-y:-102px;}
+.tomatoGallery_compiled.orange .btns button {background-position-y:-136px;}
+
+.tomatoGallery_tools .btns 	 button:hover {background-position-y:-17px;}
+.tomatoGallery_tools.red .btns 	 button:hover {background-position-y:-52px;}
+.tomatoGallery_tools.green .btns  button:hover {background-position-y:-685px;}
+.tomatoGallery_tools.yellow .btns button:hover {background-position-y:-119px;}
+.tomatoGallery_tools.orange .btns button:hover {background-position-y:-153px;}
+
+.tomatoGallery_tools .btns button {background-position-y:-0px;background-image: url(../images/btn_view_option.gif);background-repeat: no-repeat;}
+.tomatoGallery_tools .btns >span {float:left;padding:0px 4px;cursor: pointer;font-size: 14px;}
+.tomatoGallery_tools .btns button.m1 {background-position-x:3px }
+.tomatoGallery_tools .btns button.m2 {background-position-x: -13px;}
+.tomatoGallery_tools .btns button.m3 {background-position-x: -32px;}
+.tomatoGallery_tools .btns button.m4 {background-position-x: -54px;}
+
+@media screen and (max-width: 980px) {
+	.tomatoGallery_tools .btns button.m5,.tomatoGallery_tools .btns button.m4 {display: none}
+
+}
+.tomatoGallery_tools .btns button.m5 {background-position-x: -76px;}
+.tomatoGallery_tools .btns button.m6 {background-position-x: -98px;}
+.tomatoGallery_tools .btns button.m7 {background-position-x:-120px;}
+.tomatoGallery_tools .btns button.m8 {background-position-x:-141px;}
+.tomatoGallery_tools .btns button.m9 {background-position-x:-163px;width:13px;}
+
+
+div.TG {width:100%;height:800px;}
 div.tomatoGallery_compiled {width:100%;height:630px;overflow: hidden;position: relative;background: #333;padding-top:0px;}
 div.tomatoGallery_compiled.fullScreen {position: fixed;left:0px;top:0px;width:100%;height:100%;z-index: 200}
 div.tomatoGallery_compiled .tomatoGallery_btn_close {display:none;}
@@ -66,19 +192,20 @@ div.tomatoGallery_compiled>ul.tomatoGallery_visualUl>li.tomatoGallery_visualLi>p
 div.tomatoGallery_compiled>ul.tomatoGallery_visualUl>li.tomatoGallery_visualLi>p.tomatoGallery_visualP>a.openArchives {font-size:12px;text-indent: 5px;}
 div.tomatoGallery_compiled.hover>ul.tomatoGallery_visualUl>li.tomatoGallery_visualLi>p.tomatoGallery_visualP {opacity: 1}
 
-div.tomatoGallery_compiled>ul.tomatoGallery_thumbnailUl {width:100%;height:74px;overflow:hidden;z-index:10;position: absolute;bottom:0px;opacity: 0;-webkit-transition: all 0.1s ease-in-out;text-align: left;}
-div.tomatoGallery_compiled.hover>ul.tomatoGallery_thumbnailUl {opacity:1;}
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl {width:100%;height:74px;overflow:hidden;z-index:10;position: absolute;bottom:0px;opacity: 0;-webkit-transition: all 0.1s ease-in-out;text-align: left;}
+div.tomatoGallery_compiled.hover ul.tomatoGallery_thumbnailUl {opacity:1;}
 div.tomatoGallery_compiled ul,
 div.tomatoGallery_compiled ol,
 div.tomatoGallery_compiled li {list-style:none;}
 
-div.tomatoGallery_compiled>ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi {width:100px;height:70px;float:left;-webkit-transition: all 0.2s ease-in-out;cursor: pointer;border:2px solid rgba(0,0,0,0);bottom:0px;background:#333;padding:0px 2px;position: relative;}
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi {width:100px;height:70px;float:left;-webkit-transition: all 0.2s ease-in-out;cursor: pointer;border:2px solid rgba(0,0,0,0);bottom:0px;background:#333;padding:0px 2px;position: relative;}
 
-div.tomatoGallery_compiled>ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi:hover,
-div.tomatoGallery_compiled>ul.tomatoGallery_thumbnailUl>li.selected.tomatoGallery_thumbnailLi {border:2px solid white;z-index:10;}
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi:hover,
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.selected.tomatoGallery_thumbnailLi {border:2px solid white;z-index:10;}
 
-div.tomatoGallery_compiled>ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi>img.tomatoGallery_thumbnailImg {opacity: 0.6;position: absolute;}
-div.tomatoGallery_compiled>ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi:hover>img.tomatoGallery_thumbnailImg,
-div.tomatoGallery_compiled>ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi.selected>img.tomatoGallery_thumbnailImg {opacity: 1;}
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi>img.tomatoGallery_thumbnailImg {opacity: 0.6;position: absolute;}
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi:hover>img.tomatoGallery_thumbnailImg,
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi.selected>img.tomatoGallery_thumbnailImg {opacity: 1;}
 
-div.tomatoGallery_compiled>ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi>img.tomatoGallery_thumbnailImg>p.tomatoGallery_thumbnailP {display:none;}
+div.tomatoGallery_compiled ul.tomatoGallery_thumbnailUl>li.tomatoGallery_thumbnailLi>img.tomatoGallery_thumbnailImg>p.tomatoGallery_thumbnailP {display:none;}
+*/

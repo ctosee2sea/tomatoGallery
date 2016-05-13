@@ -1,27 +1,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
 	<title>tomatogalley 0.1</title>
 	<script type="text/javascript" src="src/jquery-1.11.2.min.js"></script>
-	<script type="text/javascript" src="src/jquery.touchSlider.js"></script>
 	<script type="text/javascript" src="src/jquery-ui-1.10.3.custom.min.js"></script>
+	
+
+
+
+
+	<!-- tomato standard object library -->
 	<script type="text/javascript" src="src/tomato.js"></script>
+	<!-- tomato gallery library -->
 	<script type="text/javascript" src="src/udz.js"></script>
+	<!-- tomato gallery css -->
 	<link type="text/css" rel="stylesheet" href="src/udz.css" />
 	<script>
-
 	$(function () {
 
 		$("table.tomatoGallery").each(function () {
 			var tg = new __tomatoGallery({
-				"table":$(this)
+				"table":$(this),
+				"mode":"desktop" 
+					// desktop : [touch] -> ZOOM, MOVE
+					// mobile : [touch] -> go LEFT, go RIGHT
 				})
 		})
 	})
 	</script>
 	<style>
-		#gallery {width:600px;height:800px;}
+		#gallery {width:100%;max-width:600px;height:400px;}
 	</style>
 </head>
 <body>
@@ -33,7 +44,7 @@
 		noZoom : 
 		noDrag : 
 -->
-	<table class="tomatoGallery " data-flipSpeed="3000">
+	<table class="tomatoGallery ">
 		<thead>
 			<tr><th>1열에는 사진 설명을</th>
 			<td>2열에는 사진을 넣으세요.</td>

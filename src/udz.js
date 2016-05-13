@@ -76,7 +76,8 @@ function __tomatoGallery (opt) {
 	this.standby (opt,{
 		"table":null,
 		"img":null,
-		"galleryId":Id
+		"galleryId":Id,
+		"mode":"desktop"
 	});
 	this.start();
 }
@@ -85,6 +86,7 @@ __tomatoGallery.prototype = new __TOMATOOBJECT();
 __tomatoGallery.prototype.start = function () {
 	this.parse();
 	this.generate();
+	// if ($(window).width()<768) this.mode("mobile");
 	// this.galleryId(newId());
 	// var html = '<div class="tomatoGallery_compiled"><input type="button" value="<" class="tomatoGallery_btn_prev"><input type="button" value=">" class="tomatoGallery_btn_next"><ul class="tomatoGallery_visualUl"><li class="tomatoGallery_visualLi"><p class="tomatoGallery_visualP">사진 설명을 넣으세요</p><img src="/tomato/plugin/download/download.php?bId=4628&id=299&field=file&size=1000" alt="" class="tomatoGallery_visualImg">/li>/ul><ul class="tomatoGallery_thumbnailUl"><li class="tomatoGallery_thumbnailLi"><img src="/tomato/plugin/download/download.php?bId=4628&id=299&field=file&size=1000" alt="" class="tomatoGallery_thumbnailImg">/li>/ul>/div>';
 	var _this = this;
@@ -96,9 +98,9 @@ __tomatoGallery.prototype.start = function () {
 			"width":this.table().width(),
 			"height":size,
 			"img":$("#"+this.galleryId()).children(".tomatoGallery_visualUl"),
-			"tab":$("#"+this.galleryId()).children(".tomatoGallery_thumbnailUl"),
-			"enableZoom":(this.table().hasClass('noZoom')?false:true),
-			"enableDrag":(this.table().hasClass('noDrag')?false:true),
+			"tab":$("#"+this.galleryId()).find(".tomatoGallery_thumbnailUl"),
+			"enableZoom":(this.table().hasClass('noZoom')||this.mode()=='mobile'?false:true),
+			"enableDrag":(this.table().hasClass('noDrag')||this.mode()=='mobile'?false:true),
 			"if_prev":$("#"+this.galleryId()).children(".tomatoGallery_btn_prev"),
 			"if_next":$("#"+this.galleryId()).children(".tomatoGallery_btn_next"),
 			"if_download":$("#"+this.galleryId()).children(".tomatoGallery_tools").children(".btns").children("button.m3"), //다운로드 버튼
@@ -127,7 +129,7 @@ __tomatoGallery.prototype.parse = function () {
 }
 
 __tomatoGallery.prototype.generate=function () {
-	this.table().after('<div class="tomatoGallery_compiled" id="'+this.galleryId()+'">'+(this.table().hasClass('noTools')?'':'<div class="tomatoGallery_tools"><div class="btns"><button class="m3" type="button" id="if_down">다운로드</button><button class="m4" type="button" id="if_zoomIn">확대</button><button class="m5" type="button" id="if_zoomOut">축소</button><button class="m6" type="button" id="if_fullScreen">전체 화면</button>'+(this.table().hasClass('bigMode')?'<button class="m7" type="button" id="if_bigMode">큰 화면</button>':'')+'</div></div>')+'<input type="button" value="<" class="tomatoGallery_btn_prev"><input type="button" value=">" class="tomatoGallery_btn_next"><input type="button" class="tomatoGallery_btn_close" value="X"><ul class="tomatoGallery_visualUl"></ul><ul class="tomatoGallery_thumbnailUl"></ul></div>');
+	this.table().after((this.table().hasClass('noTools')?'':'<div class="tomatoGallery_tools"><div class="btns"><button class="m3" type="button" id="if_down">다운로드</button><span class="m3">다운로드</span><button class="m4" type="button" id="if_zoomIn">확대</button><span class="m4">확대</span><button class="m5" type="button" id="if_zoomOut">축소</button><span class="m5">축소</span><button class="m6" type="button" id="if_fullScreen">전체 화면</button><span class="m6">전체 화면</span>'+(this.table().hasClass('bigMode')?'<button class="m7" type="button" id="if_bigMode">큰 화면</button>':'')+'</div></div>')+'<div class="tomatoGallery_compiled" id="'+this.galleryId()+'">'+(this.img().length>1?'<input type="button" value="<" class="tomatoGallery_btn_prev"><input type="button" value=">" class="tomatoGallery_btn_next">':'')+'<input type="button" class="tomatoGallery_btn_close" value="X"><ul class="tomatoGallery_visualUl"></ul>'+($(window).width()<1024?'<div class="thumbnailPack">':'')+'<ul class="tomatoGallery_thumbnailUl"></ul>'+($(window).width()<1024?'</div>':'')+'</div>');
 	var _this = this;
 	$.map(this.img(),function (img) {
 		// console.log(img);
@@ -135,8 +137,15 @@ __tomatoGallery.prototype.generate=function () {
 		// console.log(img.img);
 		var src = img.img;
 		// console.log(src);
-		$("#"+_this.galleryId()).children(".tomatoGallery_thumbnailUl").append('<li class="tomatoGallery_thumbnailLi"><img src="'+(img.thumbnail?img.thumbnail:src)+'" alt="" class="tomatoGallery_thumbnailImg"></li>');
+		$("#"+_this.galleryId()).find(".tomatoGallery_thumbnailUl").append('<li class="tomatoGallery_thumbnailLi"><img src="'+(img.thumbnail?img.thumbnail:src)+'" alt="" class="tomatoGallery_thumbnailImg"></li>');
 	});
+
+	if (this.img().length>1) { //1보다 클 때는 맨 처음과 마지막을 버퍼로 사용하여, 마지막 페이지 혹은 첫 페이지에서 자연스럽게 다시 반대로 오게함
+		var first = $("#"+_this.galleryId()).children(".tomatoGallery_visualUl").children("li.tomatoGallery_visualLi:first-child");
+		var last = $("#"+_this.galleryId()).children(".tomatoGallery_visualUl").children("li.tomatoGallery_visualLi:last-child");
+		$(first).before($(last).clone().addClass("clone"));
+		$(last).after($(first).clone().addClass("clone"));
+	}
 }
 
 
@@ -223,9 +232,8 @@ __tg.prototype.start = function () {
 	this.img().find("img").addClass("imgFixTG");
 	this.imgFix(this.img().find("img.imgFixTG"),(this.fullImg()?"full":"fix"));
 
-	this.if_next().css("top",(this.height()-this.if_next().height())/2);
-	this.if_prev().css("top",(this.height()-this.if_next().height())/2);
-
+	if (this.if_next()) this.if_next().css("top",(this.height()-this.if_next().height())/2);
+	if (this.if_prev()) this.if_prev().css("top",(this.height()-this.if_next().height())/2);
 
 	if (this.enableDrag()) {
 		this.img().find("img").draggable({
@@ -240,9 +248,8 @@ __tg.prototype.start = function () {
 	} else {
 		this.img().find("img").swipe({
 			swipe:function (e,d) {
-				// console.log(d);
-				if (d=="left"&&_this.index()<_this.img().children().length) _this.next();
-				if (d=="right"&&_this.index()>1) _this.prev();
+				if (d=="left") _this.next();
+				if (d=="right") _this.prev();
 			}
 		});
 	}
@@ -274,18 +281,27 @@ __tg.prototype.start = function () {
 	if (this.autoFlip()) setInterval(this.next,this.autoFlip());
 
 	$("body").keyup(function (e) {
-		console.log(e.keyCode);
+		if ($("input").add("textarea").is(":focus")) return false;
+		// console.log(e.keyCode);
 		if (e.keyCode==37) _this.prev(); //left
 		if (e.keyCode==39) _this.next(); //right
 
-		if (e.keyCode==38) _this.fullScreen(); //up
-		if (e.keyCode==40) _this.fullScreen(); //down
+		if (e.keyCode==27&&_this.fullScreenStatus()) {
+			_this.fullScreen();
+		} //right
+
+		// if (e.keyCode==38) _this.fullScreen(); //up
+		// if (e.keyCode==40) _this.fullScreen(); //down
 		if (e.keyCode==13) _this.fullScreen(); //enter
 
 		if (e.keyCode==189) _this.zoomOut(); //=,+
 		if (e.keyCode==187) _this.zoomIn(); // - _
+		if (e.keyCode==109) _this.zoomOut(); //=,+
+		if (e.keyCode==107) _this.zoomIn(); // - _
 		return false;
 	})
+	this.load(1);
+	this.imgReposition();
 }
 
 __tg.prototype.hoverToggleStart = function () {
@@ -309,7 +325,7 @@ __tg.prototype.hoverToggleEnd = function () {
 	this.tracks([]);
 }
 __tg.prototype.bigMode = function () {
-	console.log("bigMode");
+	// console.log("bigMode");
 	this.canvas().width(this.width());
 	// this.img().children().width(this.width());
 
@@ -420,25 +436,30 @@ __tg.prototype.imgFix=function () {// ( object || opt[fix,full] || packet,callba
 	if (B.length) setTimeout(function () {_this.imgFix(B,ARGS.opt)},100);
 }
 __tg.prototype.imgReposition=function () {
-	var img = this.img().children("li.tomatoGallery_visualLi:nth-child("+this.index()+")").children("img.tomatoGallery_visualImg");
+	// console.log("imgReposition");
+	var img = this.img().children("li.tomatoGallery_visualLi:nth-child("+(this.index()+1)+")").children("img.tomatoGallery_visualImg");
 	var opt = (this.fullImg()?"full":"fix");
 	$(img).width('auto');
 	$(img).height('auto');
 
 	var w = $(img).width();
 	var h = $(img).height();
-	console.log("W:"+w+",H:"+h);
+	// console.log("W:"+w+",H:"+h);
 
 	var mw = $(img).parent().width();
-	var mh = $(img).parent().height();
-	console.log("mw:"+mw+",mh:"+mh);
+	var mh = $(img).parent().height()-74;
+	// console.log("mw:"+mw+",mh:"+mh);
 	// console.log(opt);
 
 	if (opt=="fix") {
+		// console.log("opt=fix");
+
 		if (w/h>mw/mh) { //if (w/h<mw/mh) { //주석 : 화면 채우기 :: 
 			$(img).width(mw).css("top",(mw*h/w-mh)/-2).css("left",0);
+			// console.log("가로가큼");
 		} else {
-			$(img).height(mh).css("left",(mh*w/h-mw)/-2).css("top",0); 
+			$(img).height(mh-(this.fullScreenStatus()?70:0)).css("left",(mh*w/h-mw)/-2).css("top",0); 
+			// console.log("세로가 큼");
 		}
 		if (!($(img).width()>mw||$(img).height()>mh)) $(img).removeClass("imgFixTG");
 	} else {
@@ -469,18 +490,19 @@ __tg.prototype.zoomF = function (direction,_this) {
 }
 
 __tg.prototype.setZoom=function (direction) {
-	var contents = this.img().children("li.tomatoGallery_visualLi:nth-child("+this.index()+")").children("img.tomatoGallery_visualImg");
+
+	var contents = this.img().children("li.tomatoGallery_visualLi:nth-child("+(this.img().children("li.tomatoGallery_visualLi").length>1?this.index()+1:1)+")").children("img.tomatoGallery_visualImg");
 	if (contents.width()==0) {
 		// console.log("wheel cancel");
 		return false;	
-	} 
+	}
 	var unit=contents.width()*(this.zoomUnit()/5)/100*direction;
 	var p = contents.position();
 	var newWidth = contents.width()+unit;
 	var newHeight = contents.height()+(unit*contents.height()/contents.width());
 	var newLeft = p.left-unit/2;
 	var newTop = p.top-(unit*contents.height()/contents.width())/2;
-	// alert(newWidth);
+	console.log(newWidth);
 	contents.css("width",newWidth)
 	.css("height",newHeight)
 	.css("left",newLeft)
@@ -492,7 +514,7 @@ __tg.prototype.repositionStd = function (target) {
 	this.img().children("li.tomatoGallery_visualLi:nth-child("+this.index()+")").children("img.tomatoGallery_visualImg").css("left",(this.canvas().width()-this.img().find("img").width())/2);
 }
 __tg.prototype.reposition = function (target) { 
-	console.log("reposition");
+	// console.log("reposition");
 	var gap = 20;
 	var _this = this;
 	var p = $(target).position();
@@ -518,27 +540,81 @@ __tg.prototype.reposition = function (target) {
 	if (Math.abs(this.angle%90)<10||90-Math.abs(this.angle%90)<10) this.rotate(Math.round(this.angle/90)*90);
 }
 __tg.prototype.load = function (no,repositionReject) { //no = 1~this.img().children().length
-	console.log("load");
-	this.index((no<1?this.img().children().length:(no>this.img().children().length?1:no)));
-	this.img().css("margin-left",-(this.index()-1)*$(this.canvas()).width());
+
+	var _this = this;
+	var width = $(this.canvas()).width();
+	if (no>this.tab().children().length) { //끝에서 1번으로 갈 때
+		this.index(1);
+		var goal = -(_this.tab().children().length+1)*width;
+		this.img().css("margin-left",goal);
+
+		var resolveAnimation = function () {
+			console.log("try noAnimation end");
+
+			if (_this.img().css("margin-left")!=goal) {
+				_this.canvas().removeClass("noAnimation");
+				console.log("noAnimation ended");
+			} else {
+				resolveAnimation();
+			}
+		}
+		setTimeout(function () {
+			_this.canvas().addClass("noAnimation");
+			_this.img().css("margin-left",-(_this.index())*width);
+			resolveAnimation();
+			_this.imgReposition();
+		},400);
+
+	} else if (no<1) { //1번에서 끝으로 갈 때
+		this.index(this.tab().children().length);
+		this.img().css("margin-left",0);
+		var resolveAnimation = function () {
+			// console.log("try noAnimation end");
+
+			if (_this.img().css("margin-left")!=0) {
+				_this.canvas().removeClass("noAnimation");
+				console.log("noAnimation ended");
+			} else {
+				resolveAnimation();
+			}
+		}
+		setTimeout(function () {
+			_this.canvas().addClass("noAnimation");
+			_this.img().css("margin-left",-(_this.tab().children().length)*width);
+			resolveAnimation();
+		},400);
+
+	} else if (this.tab().children().length==1) {
+		this.index(no);
+		this.img().css("margin-left",0);
+	} else {
+		this.index(no);
+		this.img().css("margin-left",-(this.index())*width);
+	}
+	// console.log(this.index());
+	// this.img().css("margin-left",-(this.index()-1+(this.img().children().length>1?1:0))*$(this.canvas()).width());
 
 	this.tab().children().removeClass("selected");
+	console.log(this.tab());
+	console.log(this.index());
 	var tabLeft = $(this.tab().children()[this.index()-1]).offset().left-this.canvas().offset().left;
 	// console.log(tabLeft);
 	if (tabLeft<0) this.tab().css("margin-left",this.tab().css("margin-left").replace("px","")-tabLeft);
-	if (tabLeft>this.width()-108) this.tab().css("margin-left",this.tab().css("margin-left").replace("px","")-(tabLeft-$(this.canvas()).width()+108));
+	if (tabLeft>this.width()-108) this.tab().css("margin-left",this.tab().css("margin-left").replace("px","")-(tabLeft-width+108));
 	$(this.tab().children()[this.index()-1]).addClass("selected");
 	this.imgReposition();
 	// if (!repositionReject) this.reposition(this.img().children("li.tomatoGallery_visualLi:nth-child("+this.index()+")").children("img.tomatoGallery_visualImg"));
 }
 __tg.prototype.download = function () {
 	// console.log(this.contents.attr('src'));
-	window.open(this.img().children("li.tomatoGallery_visualLi:nth-child("+this.index()+")").children("img.tomatoGallery_visualImg").attr('src'),"download");
+	var imgNo = (this.tab().children().length==1?1:this.index()+1);
+	window.open(this.img().children("li.tomatoGallery_visualLi:nth-child("+imgNo+")").children("img.tomatoGallery_visualImg").attr('src').replace("attachment","download"),"download");
 }
 __tg.prototype.fullScreen=function () {
 	if (!this.if_fullScreen().length) return false;
-	console.log("thisNumber"+this.index());
-	console.log("owidth"+this.owidth());
+	this.canvas().addClass("noAnimation");
+	// console.log("thisNumber"+this.index());
+	// console.log("owidth"+this.owidth());
 	if (!this.fullScreenStatus()) {
 		$("body").addClass("modal");
 		this.canvas().addClass("fullScreen");
@@ -572,6 +648,10 @@ __tg.prototype.fullScreen=function () {
 	this.img().find("img").addClass("imgFixTG").attr("style","");
 	this.imgFix(this.img().find("img.imgFixTG"),(this.fullImg()?"full":"fix"));
 
+	//좌우 버튼 원위치
+	if (this.if_next()) this.if_next().css("top",(this.canvas().height()-this.if_next().height())/2);
+	if (this.if_prev()) this.if_prev().css("top",(this.canvas().height()-this.if_next().height())/2);
+
 
 
 	if (!this.frameMode()) {
@@ -590,7 +670,10 @@ __tg.prototype.fullScreen=function () {
 	}
 
 	this.load(this.index());
-
+	var _this =this;
+	setTimeout(function () {
+		_this.canvas().removeClass("noAnimation");
+	},10)
 
 }
 __tg.prototype.tabPosition = function (e) {
