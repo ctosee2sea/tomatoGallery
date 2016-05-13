@@ -1,71 +1,4 @@
-
-var newIdCount = 1;
-function newId () {
-	return "newId_"+(newIdCount++);
-}
-
-
-
-function __TOMATOOBJECT () {  // __tomato_class_generator하고 비슷한데 , getset 쪽을 분리했고.   set -> name("sean")   get -> name() 이렇게 변경
-}
-__TOMATOOBJECT.prototype = {
-	standby:function (opt,D) {
-		var opt = opt?opt:{};
-		for (var key in D) {
-			this[key] = this.getset(opt[key]!==undefined?opt[key]:D[key]);
-		}
-	},
-	getset:function  (v) { //게터 세터 + private 변수
-		var V = v;
-		return function (v) {
-			if (v!==undefined) V = v;
-			else return V; 
-		}
-	},
-	setVariable:function (key,V) {
-		this[key]=V;
-	},
-	setOutlet:function () {
-		if (!this.outlet ) return false;
-		var _this = this;
-
-		$.map(
-			this.outlet(),
-			function (m) {
-				// console.log(m);
-				if (_this[m[0]]()) _this[m[0]]().unbind(m[2]).bind(m[2],function (e) {
-					_this[m[1]](e);
-					// m[1]();
-					// _this.call(m[1]);
-				});
-			}
-		);
-	},
-	makeCallBack:function (total,callback) {
-		var count=0;
-		return function () {
-			console.log("cs"+count);
-			if (total-1==count++) callback();
-		};
-	},
-	typeOfMatching :function (F,V) { //frame, Variable
-		// F의 key와 V의 각 변수 종류를 매칭시킨 Object를 반환한다.
-		// ex) __TYPEOF_MATCHING({"object":"option","function":"callback","string":"identity"},{"name":"sean","meta":{"age":"30","job":"programmer"},"go":function (A) {return A}})
-		//  return {"option":{"age":"30","job":"programmer"},"callback":function (A) {return A},"identity":"sean"}
-
-
-		//1. jqueryMap으로 V를 object->array로 변경
-		//2. reduce로 typeof으로 매칭
-
-		return $
-			.map(V,function (v) {
-				return [v]})
-			.reduce(function (obj,v) {
-				return obj[F[typeof(v)]]=v,obj;
-			},
-			{});
-	}
-}
+var newIdCount = 1;function newId () {return "newId_"+(newIdCount++);}function __TOMATOOBJECT () {};__TOMATOOBJECT.prototype = {standby:function (opt,D) {var opt = opt?opt:{};for (var key in D) {this[key] = this.getset(opt[key]!==undefined?opt[key]:D[key]);}},getset:function  (v) {var V = v;return function (v) {if (v!==undefined) V = v;else return V; }},setVariable:function (key,V) {this[key]=V;},setOutlet:function () {if (!this.outlet ) return false;var _this = this;$.map(this.outlet(),function (m) {if (_this[m[0]]()) _this[m[0]]().unbind(m[2]).bind(m[2],function (e) {_this[m[1]](e);});});},makeCallBack:function (total,callback) {var count=0;return function () {console.log("cs"+count);if (total-1==count++) callback();};},typeOfMatching :function (F,V) {return $.map(V,function (v) {return [v]}).reduce(function (obj,v) {return obj[F[typeof(v)]]=v,obj;},{});}}
 
 
 
@@ -86,9 +19,6 @@ __tomatoGallery.prototype = new __TOMATOOBJECT();
 __tomatoGallery.prototype.start = function () {
 	this.parse();
 	this.generate();
-	// if ($(window).width()<768) this.mode("mobile");
-	// this.galleryId(newId());
-	// var html = '<div class="tomatoGallery_compiled"><input type="button" value="<" class="tomatoGallery_btn_prev"><input type="button" value=">" class="tomatoGallery_btn_next"><ul class="tomatoGallery_visualUl"><li class="tomatoGallery_visualLi"><p class="tomatoGallery_visualP">사진 설명을 넣으세요</p><img src="/tomato/plugin/download/download.php?bId=4628&id=299&field=file&size=1000" alt="" class="tomatoGallery_visualImg">/li>/ul><ul class="tomatoGallery_thumbnailUl"><li class="tomatoGallery_thumbnailLi"><img src="/tomato/plugin/download/download.php?bId=4628&id=299&field=file&size=1000" alt="" class="tomatoGallery_thumbnailImg">/li>/ul>/div>';
 	var _this = this;
 	// var size = this.table().hasClass("small")?400:800;
 	var size = this.table().parent().height();
